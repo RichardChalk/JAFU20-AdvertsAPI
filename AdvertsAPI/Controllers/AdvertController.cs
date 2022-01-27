@@ -1,7 +1,4 @@
-﻿using Microsoft.AspNetCore.JsonPatch;
-using Microsoft.AspNetCore.Mvc;
-
-namespace AdvertsAPI.Controllers
+﻿namespace AdvertsAPI.Controllers
 {
     [Produces("application/json")]
     [Route("api/[controller]")]
@@ -17,7 +14,7 @@ namespace AdvertsAPI.Controllers
 
         // CREATE ////////////////////////////////////////////////////////
         /// <summary>
-        /// Create and add an advert to the database
+        /// (Admin only) Create and add an advert to the database
         /// </summary>
         /// <param 
         /// name="advert">Below is the format needed for the request body
@@ -31,10 +28,10 @@ namespace AdvertsAPI.Controllers
         /// <response code="201">
         /// Your advert was created successfully
         /// </response>
-        [HttpPost]
+        [HttpPost("Create")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesDefaultResponseType]
-
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult<List<Advert>>> Post([FromBody] Advert advert)
         {
             _context.Adverts.Add(advert);
@@ -56,9 +53,10 @@ namespace AdvertsAPI.Controllers
         /// <response code="200">
         /// Successfully returned a full list of ALL adverts
         /// </response>
-        [HttpGet]
+        [HttpGet("GetAll")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesDefaultResponseType]
+        [Authorize(Roles = "Admin, User")]
         public async Task<ActionResult<List<Advert>>> GetAll()
         {
             return Ok(await _context.Adverts.ToListAsync());
@@ -81,9 +79,10 @@ namespace AdvertsAPI.Controllers
         /// <response code="200">
         /// Successfully returned the chosen advert (by Id)
         /// </response>
-        [HttpGet("{id}")]
+        [HttpGet("GetOne/{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesDefaultResponseType]
+        [Authorize(Roles = "Admin, User")]
         public async Task<ActionResult<Advert>> GetOne(int id)
         {
             var advert = await _context.Adverts.FindAsync(id);
@@ -98,7 +97,7 @@ namespace AdvertsAPI.Controllers
 
         // UPDATE ////////////////////////////////////////////////////////
         /// <summary>
-        /// Update ALL properties of 1 advert in the database
+        /// (Admin only) Update ALL properties of 1 advert in the database
         /// </summary>
         /// <param name="request">
         /// An instance of the Advert class
@@ -112,9 +111,10 @@ namespace AdvertsAPI.Controllers
         /// <response code="200">
         /// Your advert was updated successfully
         /// </response>
-        [HttpPut]
+        [HttpPut("Update")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesDefaultResponseType]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult<List<Advert>>> Put([FromBody] Advert request)
         {
             var dbAdvert = await _context.Adverts.FindAsync(request.Id);
@@ -141,7 +141,7 @@ namespace AdvertsAPI.Controllers
         // Microsoft.AspNetCore.MVC.NewtonsoftJson
 
         /// <summary>
-        /// Partially update a SPECIFIC advert from the database
+        /// (Admin only) Partially update a SPECIFIC advert from the database
         /// </summary>
         /// <param name="id">
         /// Id of specific advert
@@ -158,10 +158,11 @@ namespace AdvertsAPI.Controllers
         /// <response code="200">
         /// Advert was partially updated successfully (by Id)
         /// </response>
-        [HttpPatch("{id}")]
+        [HttpPatch("PartialUpdate/{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesDefaultResponseType]
-        public async Task<ActionResult> Patch2([FromBody] JsonPatchDocument request, int id)
+        [Authorize(Roles = "Admin")]
+        public async Task<ActionResult> Patch([FromBody] JsonPatchDocument request, int id)
         {
             var dbAdvert = await _context.Adverts.FindAsync(id);
 
@@ -171,6 +172,8 @@ namespace AdvertsAPI.Controllers
             }
 
             request.ApplyTo(dbAdvert);
+            await _context.SaveChangesAsync();
+
             return Ok(dbAdvert);
         }
 
@@ -191,9 +194,10 @@ namespace AdvertsAPI.Controllers
         /// <response code="200">
         /// Successfully deleted the chosen advert (by Id)
         /// </response>
-        [HttpDelete("{id}")]
+        [HttpDelete("Delete/{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesDefaultResponseType]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult<List<Advert>>> Delete(int id)
         {
             var dbAdvert = await _context.Adverts.FindAsync(id);
