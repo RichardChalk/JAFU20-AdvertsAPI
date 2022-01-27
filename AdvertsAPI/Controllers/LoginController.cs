@@ -1,8 +1,5 @@
 ﻿using AdvertsAPI.User;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
 using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
 
 namespace AdvertsAPI.Controllers
 {
@@ -17,8 +14,27 @@ namespace AdvertsAPI.Controllers
             _config = config;
         }
 
+        // LOGIN ////////////////////////////////////////////////////////
+        /// <summary>
+        /// A chance to login
+        /// </summary>
+        /// <param 
+        /// name="userLogin">Login with Username and password
+        /// </param>
+        /// <returns>
+        /// User is logged in
+        /// </returns>
+        /// <remarks>
+        /// Example end point: POST /api/Login
+        /// </remarks>
+        /// <response code="200">
+        /// You were logged in successfully
+        /// </response>
         [AllowAnonymous]
         [HttpPost]
+        [ProducesResponseType(StatusCodes.Status200Created)]
+        [ProducesDefaultResponseType]
+
         public IActionResult Login([FromBody] UserLogin userLogin)
         {
             var user = Authenticate(userLogin);
