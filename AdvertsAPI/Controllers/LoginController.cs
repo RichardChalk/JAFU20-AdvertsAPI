@@ -32,7 +32,7 @@ namespace AdvertsAPI.Controllers
         /// </response>
         [AllowAnonymous]
         [HttpPost]
-        [ProducesResponseType(StatusCodes.Status200Created)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesDefaultResponseType]
 
         public IActionResult Login([FromBody] UserLogin userLogin)
