@@ -88,7 +88,7 @@
 
             if (advert == null)
             {
-                return BadRequest("Advert not found");
+                return NotFound("Advert not found");
             }
             return Ok(advert);
         }
@@ -120,7 +120,7 @@
 
             if (dbAdvert == null)
             {
-                return BadRequest("Advert not found");
+                return NotFound("Advert not found");
             }
 
             // Automapper possible here
@@ -167,7 +167,7 @@
 
             if (dbAdvert == null)
             {
-                return BadRequest("Advert not found");
+                return NotFound("Advert not found");
             }
 
             request.ApplyTo(dbAdvert);
@@ -203,7 +203,7 @@
 
             if (dbAdvert == null)
             {
-                return BadRequest("Advert not found");
+                return NotFound("Advert not found");
             }
 
             _context.Adverts.Remove(dbAdvert);
