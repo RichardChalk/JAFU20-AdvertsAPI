@@ -11,7 +11,6 @@
             _context = context;
         }
 
-
         // CREATE ////////////////////////////////////////////////////////
         /// <summary>
         /// (Admin only) Create and add an advert to the database
