@@ -61,7 +61,18 @@ namespace AdvertsAPI.Controllers
         [Authorize(Roles = "Admin, User")]
         public async Task<ActionResult<List<Advert>>> GetAll()
         {
-            return Ok(await _context.Adverts.ToListAsync());
+            var adverts = _context.Adverts
+                .Select(a => new AdvertDTO
+                {
+                    Id = a.Id,
+                    Name = a.Name,
+                    Description = a.Description,
+                    Price = a.Price,
+                    DateAdded = a.DateAdded,
+                });
+
+            return Ok(adverts);
+               
         }
 
 
@@ -87,7 +98,16 @@ namespace AdvertsAPI.Controllers
         [Authorize(Roles = "Admin, User")]
         public async Task<ActionResult<Advert>> GetOne(int id)
         {
-            var advert = await _context.Adverts.FindAsync(id);
+            var advert = _context.Adverts
+                .Where(a => a.Id == id)
+                .Select(a => new AdvertDTO
+                {
+                    Id = a.Id,
+                    Name = a.Name,
+                    Description = a.Description,
+                    Price = a.Price,
+                    DateAdded = a.DateAdded,
+                });
 
             if (advert == null)
             {
