@@ -100,6 +100,15 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 builder.Services.AddMvc();
 builder.Services.AddControllers();
 
+// Adding CORS
+builder.Services.AddCors(o => o.AddPolicy("AllowAll", builder =>
+{
+    builder.AllowAnyOrigin()
+        .AllowAnyMethod()
+        .AllowAnyHeader();
+}));
+
+
 
 var app = builder.Build();
 
@@ -118,6 +127,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseCors("AllowAll");
 
 // Needed for JWT Token authorisation
 // MUST COME BEFORE 'USEAUTHORIZATION'!!!!

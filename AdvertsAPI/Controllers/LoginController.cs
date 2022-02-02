@@ -1,10 +1,12 @@
 ﻿using AdvertsAPI.User;
+using Microsoft.AspNetCore.Cors;
 using System.IdentityModel.Tokens.Jwt;
 
 namespace AdvertsAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [EnableCors("AllowAll")]
     public class LoginController : ControllerBase
     {
         private IConfiguration _config;

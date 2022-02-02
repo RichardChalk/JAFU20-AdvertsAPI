@@ -1,8 +1,11 @@
-﻿namespace AdvertsAPI.Controllers
+﻿using Microsoft.AspNetCore.Cors;
+
+namespace AdvertsAPI.Controllers
 {
     [Produces("application/json")]
     [Route("api/[controller]")]
     [ApiController]
+    [EnableCors("AllowAll")]
     public class AdvertController : ControllerBase
     {
         private readonly ApplicationDbContext _context;

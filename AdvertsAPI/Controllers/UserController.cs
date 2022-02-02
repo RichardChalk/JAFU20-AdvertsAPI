@@ -1,10 +1,11 @@
 ﻿using AdvertsAPI.User;
-
+using Microsoft.AspNetCore.Cors;
 
 namespace AdvertsAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [EnableCors("AllowAll")]
     public class UserController : ControllerBase
     {
         private UserModel GetCurrentUser()
