@@ -34,8 +34,18 @@ namespace AdvertsAPI.Controllers
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesDefaultResponseType]
         [Authorize(Roles = "Admin")]
-        public async Task<ActionResult<List<Advert>>> Post([FromBody] Advert advert)
+        public async Task<ActionResult<List<Advert>>> Post([FromBody] AdvertDTO advertModel)
         {
+            // Too lazy for Automapper
+            var advert = new Advert
+            {
+                Id = advertModel.Id,
+                Name = advertModel.Name,
+                Description = advertModel.Description,
+                Price = advertModel.Price,
+                DateAdded = advertModel.DateAdded,
+            };
+            
             _context.Adverts.Add(advert);
             await _context.SaveChangesAsync();
             return Ok(await _context.Adverts.ToListAsync());
@@ -59,8 +69,9 @@ namespace AdvertsAPI.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesDefaultResponseType]
         [Authorize(Roles = "Admin, User")]
-        public async Task<ActionResult<List<Advert>>> GetAll()
+        public async Task<ActionResult<List<AdvertDTO>>> GetAll()
         {
+            // Too lazy for Automapper
             var adverts = _context.Adverts
                 .Select(a => new AdvertDTO
                 {
@@ -96,8 +107,9 @@ namespace AdvertsAPI.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesDefaultResponseType]
         [Authorize(Roles = "Admin, User")]
-        public async Task<ActionResult<Advert>> GetOne(int id)
+        public async Task<ActionResult<AdvertDTO>> GetOne(int id)
         {
+            // Too lazy for Automapper
             var advert = _context.Adverts
                 .Where(a => a.Id == id)
                 .Select(a => new AdvertDTO
@@ -137,7 +149,7 @@ namespace AdvertsAPI.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesDefaultResponseType]
         [Authorize(Roles = "Admin")]
-        public async Task<ActionResult<List<Advert>>> Put([FromBody] Advert request)
+        public async Task<ActionResult<List<AdvertDTO>>> Put([FromBody] AdvertDTO request)
         {
             var dbAdvert = await _context.Adverts.FindAsync(request.Id);
 
@@ -146,7 +158,7 @@ namespace AdvertsAPI.Controllers
                 return NotFound("Advert not found");
             }
 
-            // Automapper possible here
+            // Too lazy for Automapper
             dbAdvert.Name = request.Name;
             dbAdvert.Description = request.Description;
             dbAdvert.Price = request.Price;
@@ -220,7 +232,7 @@ namespace AdvertsAPI.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesDefaultResponseType]
         [Authorize(Roles = "Admin")]
-        public async Task<ActionResult<List<Advert>>> Delete(int id)
+        public async Task<ActionResult<List<AdvertDTO>>> Delete(int id)
         {
             var dbAdvert = await _context.Adverts.FindAsync(id);
 
