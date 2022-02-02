@@ -36,7 +36,7 @@ namespace AdvertsAPI.Controllers
         [Authorize(Roles = "Admin")]
         public async Task<ActionResult<List<Advert>>> Post([FromBody] AdvertDTO advertModel)
         {
-            // Too lazy for Automapper
+            // Too lazy for Automapper & Services apparently!
             var advert = new Advert
             {
                 Id = advertModel.Id,
@@ -71,7 +71,7 @@ namespace AdvertsAPI.Controllers
         [Authorize(Roles = "Admin, User")]
         public async Task<ActionResult<List<AdvertDTO>>> GetAll()
         {
-            // Too lazy for Automapper
+            // Too lazy for Automapper & Services apparently!
             var adverts = _context.Adverts
                 .Select(a => new AdvertDTO
                 {
@@ -109,7 +109,7 @@ namespace AdvertsAPI.Controllers
         [Authorize(Roles = "Admin, User")]
         public async Task<ActionResult<AdvertDTO>> GetOne(int id)
         {
-            // Too lazy for Automapper
+            // Too lazy for Automapper & Services apparently!
             var advert = _context.Adverts
                 .Where(a => a.Id == id)
                 .Select(a => new AdvertDTO
@@ -158,7 +158,7 @@ namespace AdvertsAPI.Controllers
                 return NotFound("Advert not found");
             }
 
-            // Too lazy for Automapper
+            // Too lazy for Automapper & Services apparently!
             dbAdvert.Name = request.Name;
             dbAdvert.Description = request.Description;
             dbAdvert.Price = request.Price;
