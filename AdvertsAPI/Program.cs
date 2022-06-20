@@ -120,11 +120,12 @@ using (var scope = app.Services.CreateScope())
 
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
+// Allow swagger in prod mode
+//if (app.Environment.IsDevelopment())
+//
     app.UseSwagger();
     app.UseSwaggerUI();
-}
+//}
 
 app.UseHttpsRedirection();
 app.UseCors("AllowAll");
