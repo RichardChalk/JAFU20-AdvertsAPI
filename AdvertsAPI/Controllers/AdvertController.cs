@@ -198,6 +198,15 @@ namespace AdvertsAPI.Controllers
         [Authorize(Roles = "Admin")]
         public async Task<ActionResult> Patch([FromBody] JsonPatchDocument request, int id)
         {
+            // Use this schema when updating in swagger/postman
+            //[
+            //    {
+            //    "op": "replace",
+            //    "path": "ColumnName",
+            //    "value": "New Value here",
+            //    }
+            //]
+
             var dbAdvert = await _context.Adverts.FindAsync(id);
 
             if (dbAdvert == null)

@@ -7,21 +7,21 @@
             // Full read/write access
             new UserModel()
             {
-                UserName = "stefan_admin",
-                EmailAddress = "stefan_admin@email.se",
+                UserName = "richard_admin",
+                EmailAddress = "richard_admin@email.se",
                 Password = "passwordAdmin",
-                GivenName = "Stefan",
-                SurName = "Holmberg",
+                GivenName = "Richard",
+                SurName = "chalk",
                 Role = "Admin",
             },
             // Can only Read
             new UserModel()
             {
-                UserName = "stefan_user",
-                EmailAddress = "stefan_user@email.se",
+                UserName = "richard_user",
+                EmailAddress = "richard_user@email.se",
                 Password = "passwordUser",
-                GivenName = "Stefan",
-                SurName = "Holmberg",
+                GivenName = "Richard",
+                SurName = "Chalk",
                 Role = "User",
             }
         };
