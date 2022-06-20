@@ -27,7 +27,7 @@ builder.Services.AddSwaggerGen(sw =>
     {
         Version = "v1.0",
         Title = "My Adverts API",
-        Description = @"JAFU20-API for retrieving my Adverts",
+        Description = @"API for retrieving my Adverts",
         Contact = new OpenApiContact
         {
             Name = "Richard Chalk",
